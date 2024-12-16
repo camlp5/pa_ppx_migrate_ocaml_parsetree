@@ -82,7 +82,7 @@ ast_CURRENT.ml: ast.ml
 	$(LAUNCH) $(YAWRAP) $(NOT_OCAMLFIND) preprocess $(OCAMLCFLAGS) $(IMPORT_OCAMLCFLAGS) -package $(PACKAGES),$(PRPACKAGE) $< > $@.NEW && mv $@.NEW $@
 
 ast.ml: ast.ORIG.ml
-	cppo -D PREFIX -V OCAML:$(ocamlVERSION) $< > $@.NEW && mv $@.NEW $@
+	cppo -D CURRENT -D PREFIX -V OCAML:$(ocamlVERSION) $< > $@.NEW && mv $@.NEW $@
 
 $(TARGET): $(CMO)
 	$(OCAMLFIND) ocamlc $(DEBUG) $^ -a -o $(TARGET)

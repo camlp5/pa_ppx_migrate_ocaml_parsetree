@@ -46,9 +46,7 @@ let migration_error location feature =
 let _migrate_list subrw0 __dt__ __inh__ l =
   List.map (subrw0 __dt__ __inh__) l
 
-module Format_doc = struct
-  type formatter = [%import: Reorg_ast.Ast_5_3.Format_doc.formatter]
-end
+module Format_doc = Reorg_ast.Ast_5_3.Format_doc
 [%%import: Reorg_ast.Ast_5_3.attribute]
 (*
 [%%import: Migrate_520_510.attribute]

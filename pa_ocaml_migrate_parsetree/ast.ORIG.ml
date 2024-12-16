@@ -66,10 +66,14 @@ end
 #endif
 
 #if OCAML_VERSION >= (5,3,0)
+#ifndef CURRENT
 module Format_doc = struct
   type abstract_formatter
     type formatter = abstract_formatter
 end
+#else
+module Format_doc = Format_doc
+#endif
 #endif
 
 module Outcometree = struct

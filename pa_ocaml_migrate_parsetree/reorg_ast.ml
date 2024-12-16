@@ -5095,11 +5095,7 @@ end
 
 
 module Ast_5_3 = struct
-module Format_doc = struct
-  type formatter = [%import: All_ast.Ast_5_3.Format_doc.formatter
-  [@with abstract_formatter := All_ast.Ast_5_3.Format_doc.abstract_formatter]
-]
-end
+module Format_doc = All_ast.Ast_5_3.Format_doc
 type lexing_position = [%import: All_ast.Ast_5_3.Lexing.position]
 and location_t = [%import: All_ast.Ast_5_3.Location.t
     [@with Lexing.position := lexing_position]
