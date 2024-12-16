@@ -34,11 +34,11 @@ test-everything: all
 	set -e; for i in $(TESTDIRS); do cd $$i; $(MAKE) test; cd ..; done
 
 install:
-	$(OCAMLFIND) remove pa_ppx_ocaml_parsetree || true
-	$(OCAMLFIND) install pa_ppx_ocaml_parsetree local-install/lib/pa_ppx_ocaml_parsetree/*
+	$(OCAMLFIND) remove pa_ppx_migrate_ocaml_parsetree || true
+	$(OCAMLFIND) install pa_ppx_migrate_ocaml_parsetree local-install/lib/pa_ppx_migrate_ocaml_parsetree/*
 
 uninstall:
-	$(OCAMLFIND) remove pa_ppx_ocaml_parsetree || true
+	$(OCAMLFIND) remove pa_ppx_migrate_ocaml_parsetree || true
 
 clean::
 	set -e; for i in $(SYSDIRS) $(TESTDIRS); do cd $$i; $(MAKE) clean; cd ..; done
