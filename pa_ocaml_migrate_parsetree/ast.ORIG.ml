@@ -65,6 +65,13 @@ module Type_immediacy = struct
 end
 #endif
 
+#if OCAML_VERSION >= (5,3,0)
+module Format_doc = struct
+  type abstract_formatter
+    type formatter = abstract_formatter
+end
+#endif
+
 module Outcometree = struct
 #if OCAML_VERSION > (4,7,0)
 [%%import: PREFIX Outcometree.out_name] 

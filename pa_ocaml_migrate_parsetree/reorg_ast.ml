@@ -5095,6 +5095,11 @@ end
 
 
 module Ast_5_3 = struct
+module Format_doc = struct
+  type formatter = [%import: All_ast.Ast_5_3.Format_doc.formatter
+  [@with abstract_formatter := All_ast.Ast_5_3.Format_doc.abstract_formatter]
+]
+end
 type lexing_position = [%import: All_ast.Ast_5_3.Lexing.position]
 and location_t = [%import: All_ast.Ast_5_3.Location.t
     [@with Lexing.position := lexing_position]
@@ -5427,7 +5432,9 @@ and out_name = [%import: All_ast.Ast_5_3.Outcometree.out_name]
 and out_ident = [%import: All_ast.Ast_5_3.Outcometree.out_ident]
 and out_string = [%import: All_ast.Ast_5_3.Outcometree.out_string]
 and out_attribute = [%import: All_ast.Ast_5_3.Outcometree.out_attribute]
-and out_value = [%import: All_ast.Ast_5_3.Outcometree.out_value]
+and out_value = [%import: All_ast.Ast_5_3.Outcometree.out_value
+    [@with All_ast.Ast_5_3.Format_doc.formatter := Format_doc.formatter]
+]
 and out_type = [%import: All_ast.Ast_5_3.Outcometree.out_type
     [@with Asttypes.arg_label := arg_label]
 ]
@@ -5460,5 +5467,8 @@ and out_val_decl = [%import: All_ast.Ast_5_3.Outcometree.out_val_decl]
 and out_rec_status = [%import: All_ast.Ast_5_3.Outcometree.out_rec_status]
 and out_ext_status = [%import: All_ast.Ast_5_3.Outcometree.out_ext_status]
 and out_phrase = [%import: All_ast.Ast_5_3.Outcometree.out_phrase]
-and out_label = [%import: All_ast.Ast_5_3.Outcometree.out_label]
+and out_label = [%import: All_ast.Ast_5_3.Outcometree.out_label
+    [@with Asttypes.mutable_flag := mutable_flag
+    ]
+]
 end

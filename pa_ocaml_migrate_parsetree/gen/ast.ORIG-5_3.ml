@@ -137,63 +137,69 @@ module Type_immediacy = struct
                   Type_immediacy.t] 
 end
 
-# 68 "ast.ORIG.ml"
+# 69 "ast.ORIG.ml"
+module Format_doc = struct
+  type abstract_formatter
+    type formatter = abstract_formatter
+end
+
+# 75 "ast.ORIG.ml"
 module Outcometree = struct
-# 70 "ast.ORIG.ml"
+# 77 "ast.ORIG.ml"
 [%%import: 
-# 70 "ast.ORIG.ml"
+# 77 "ast.ORIG.ml"
              
-# 70 "ast.ORIG.ml"
+# 77 "ast.ORIG.ml"
                   Outcometree.out_name] 
-# 72 "ast.ORIG.ml"
+# 79 "ast.ORIG.ml"
 [%%import: 
-# 72 "ast.ORIG.ml"
+# 79 "ast.ORIG.ml"
              
-# 72 "ast.ORIG.ml"
+# 79 "ast.ORIG.ml"
                   Outcometree.out_ident] 
-# 74 "ast.ORIG.ml"
+# 81 "ast.ORIG.ml"
 [%%import: 
-# 74 "ast.ORIG.ml"
+# 81 "ast.ORIG.ml"
              
-# 74 "ast.ORIG.ml"
+# 81 "ast.ORIG.ml"
                   Outcometree.out_string] 
-# 77 "ast.ORIG.ml"
+# 84 "ast.ORIG.ml"
 [%%import: 
-# 77 "ast.ORIG.ml"
+# 84 "ast.ORIG.ml"
              
-# 77 "ast.ORIG.ml"
+# 84 "ast.ORIG.ml"
                   Outcometree.out_attribute] 
-# 79 "ast.ORIG.ml"
+# 86 "ast.ORIG.ml"
 [%%import: 
-# 79 "ast.ORIG.ml"
+# 86 "ast.ORIG.ml"
              
-# 79 "ast.ORIG.ml"
+# 86 "ast.ORIG.ml"
                   Outcometree.out_value] 
-# 81 "ast.ORIG.ml"
+# 88 "ast.ORIG.ml"
 [%%import: 
-# 81 "ast.ORIG.ml"
+# 88 "ast.ORIG.ml"
              
-# 81 "ast.ORIG.ml"
+# 88 "ast.ORIG.ml"
                   Outcometree.out_type_param]
-# 83 "ast.ORIG.ml"
+# 90 "ast.ORIG.ml"
 [%%import: 
-# 83 "ast.ORIG.ml"
+# 90 "ast.ORIG.ml"
              
-# 83 "ast.ORIG.ml"
+# 90 "ast.ORIG.ml"
                   Outcometree.out_type] 
 [%%import: 
-# 84 "ast.ORIG.ml"
+# 91 "ast.ORIG.ml"
              
-# 84 "ast.ORIG.ml"
+# 91 "ast.ORIG.ml"
                   Outcometree.out_class_type] 
 [%%import: 
-# 85 "ast.ORIG.ml"
+# 92 "ast.ORIG.ml"
              
-# 85 "ast.ORIG.ml"
+# 92 "ast.ORIG.ml"
                   Outcometree.out_module_type] 
 [%%import: 
-# 86 "ast.ORIG.ml"
+# 93 "ast.ORIG.ml"
              
-# 86 "ast.ORIG.ml"
+# 93 "ast.ORIG.ml"
                   Outcometree.out_phrase] 
 end

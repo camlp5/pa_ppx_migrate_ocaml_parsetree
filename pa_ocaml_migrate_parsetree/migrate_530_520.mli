@@ -3,7 +3,9 @@ module SRC = Reorg_ast.Ast_5_3
 module DST = Reorg_ast.Ast_5_2
 
 include (sig open Reorg_ast end)
-
+module Format_doc : sig
+  type formatter = [%import: Reorg_ast.Ast_5_3.Format_doc.formatter]
+end
 [%%import: Reorg_ast.Ast_5_3.attribute]
 [@@deriving migrate
     { inherit_type = [%typ: location_t option]

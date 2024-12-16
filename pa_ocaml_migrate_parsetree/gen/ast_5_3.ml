@@ -429,6 +429,11 @@ module Type_immediacy =
   struct
     type t = Unknown | Always | Always_on_64bits
   end
+module Format_doc =
+  struct
+    type abstract_formatter
+    type formatter = abstract_formatter
+  end
 module Outcometree =
   struct
     type out_name = { mutable printed_name : string }
