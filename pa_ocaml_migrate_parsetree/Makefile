@@ -10,7 +10,6 @@ DESTDIR=
 PACKAGES := $(PACKAGES),pa_ppx.base,fmt,bos
 export IMPORT_OCAMLCFLAGS = -ppopt -pa_passthru-debug -package pa_ppx.import,pa_ppx_migrate
 TARGET_PACKAGE=pa_ppx_migrate_ocaml_parsetree
-TARGET=$(TARGET_PACKAGE).cma
 
 ML=all_ast.ml reorg_ast.ml \
 	migrate_402_403.ml migrate_403_402.ml \
@@ -61,12 +60,12 @@ TOOLSML = mk_meta.ml
 ALLSRC=$(ML) $(MLI) $(TOOLSML)
 ALLPACKAGES=$(PACKAGES)
 
-all: $(ARCHIVE_TARGET_INSTALL_FILES) META
+all: $(CMO) $(CMX)
 	$(MAKE) local-install
 
 doc: $(CMT) $(CMTI)
 
-TARGET_INSTALL_FILES=$(ARCHIVE_TARGET_INSTALL_FILES) $(FILES_TARGET_INSTALL_FILES)
+TARGET_INSTALL_FILES=$(FILES_TARGET_INSTALL_FILES)
 install:: default_install
 
 clean::
@@ -87,6 +86,6 @@ ast.ml: ast.ORIG.ml
 $(TARGET): $(CMO)
 	$(OCAMLFIND) ocamlc $(DEBUG) $^ -a -o $(TARGET)
 
-$(TARGET:.cma=.cmxa) $(TARGET:.cma=.a): $(CMX)
+$(TARGET:.cma=.cmxa) $(TARGET:.cma=.a): $(CMX) $(CMO:.cmo=.o)
 	$(OCAMLFIND) ocamlopt $(DEBUG) $^ -a -o $(TARGET:.cma=.cmxa)
 
