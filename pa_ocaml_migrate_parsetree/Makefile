@@ -78,7 +78,6 @@ local-install::
 	$(MAKE) DESTDIR=$(WD)/$(TOP)/local-install/ install
 
 all_ast.ml: all_ast.ORIG.ml ast_CURRENT.ml $(wildcard gen/ast_*.ml)
-	cppo -V OCAML:$(ocamlVERSION) $< > all_ast.ml.NEW && mv all_ast.ml.NEW all_ast.ml
 
 ast_CURRENT.ml: ast.ml
 	$(LAUNCH) $(YAWRAP) $(NOT_OCAMLFIND) preprocess $(OCAMLCFLAGS) $(IMPORT_OCAMLCFLAGS) -package $(PACKAGES),$(PRPACKAGE) $< > $@.NEW && mv $@.NEW $@
@@ -99,4 +98,4 @@ $(TARGET:.cma=.cmxa) $(TARGET:.cma=.a): $(CMX) $(CMO:.cmo=.o)
 	$(OCAMLFIND) ocamlopt $(DEBUG) $^ -a -o $(TARGET:.cma=.cmxa)
 
 clean::
-	rm -rf *.inc migrations.ml composed_migrations.inc *.NEW
+	rm -rf *.inc migrations.ml composed_migrations.inc *.NEW all_ast.ml
