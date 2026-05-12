@@ -5479,7 +5479,9 @@ and 'a location_loc = [%import: 'a All_ast.Ast_5_4.Location.loc
     [@with t := location_t]
 ]
 and longident_t = [%import: All_ast.Ast_5_4.Longident.t
-    [@with t := longident_t]
+    [@with t := longident_t
+         ; Location.loc := location_loc
+    ]
 ]
 
 and label = [%import: All_ast.Ast_5_4.Asttypes.label]
@@ -5807,7 +5809,9 @@ and out_ident = [%import: All_ast.Ast_5_4.Outcometree.out_ident]
 and out_string = [%import: All_ast.Ast_5_4.Outcometree.out_string]
 and out_attribute = [%import: All_ast.Ast_5_4.Outcometree.out_attribute]
 and out_value = [%import: All_ast.Ast_5_4.Outcometree.out_value
-    [@with All_ast.Ast_5_4.Format_doc.formatter := Format_doc.formatter]
+    [@with All_ast.Ast_5_4.Format_doc.formatter := Format_doc.formatter
+         ; Asttypes.mutable_flag := mutable_flag
+    ]
 ]
 and out_type = [%import: All_ast.Ast_5_4.Outcometree.out_type
     [@with Asttypes.arg_label := arg_label]
@@ -5844,6 +5848,7 @@ and out_phrase = [%import: All_ast.Ast_5_4.Outcometree.out_phrase]
 and out_package = [%import: All_ast.Ast_5_4.Outcometree.out_package]
 and out_label = [%import: All_ast.Ast_5_4.Outcometree.out_label
     [@with Asttypes.mutable_flag := mutable_flag
+         ; Asttypes.atomic_flag := atomic_flag
     ]
 ]
 end
