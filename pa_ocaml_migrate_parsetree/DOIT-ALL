@@ -14,4 +14,5 @@ for v in \
 ./DOIT 5 0
 ./DOIT 5 1
 ./DOIT 5 2
-./DOIT 5 3 ~beta2
+./DOIT 5 3
+./DOIT 5 4

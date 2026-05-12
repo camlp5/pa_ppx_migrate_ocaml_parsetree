@@ -32,6 +32,7 @@ ML=all_ast.ml reorg_ast.ml \
 	migrate_500_510.ml migrate_510_500.ml \
 	migrate_510_520.ml migrate_520_510.ml \
 	migrate_520_530.ml migrate_530_520.ml \
+	migrate_530_540.ml migrate_540_530.ml \
 	migrations.ml
 
 MLI=\
@@ -55,6 +56,8 @@ MLI=\
 	migrate_500_510.mli migrate_510_500.mli \
 	migrate_510_520.mli migrate_520_510.mli \
 	migrate_520_530.mli migrate_530_520.mli \
+	migrate_530_540.mli migrate_540_530.mli \
+
 
 TOOLSML = mk_meta.ml
 ALLSRC=$(ML) $(MLI) $(TOOLSML)
@@ -83,9 +86,17 @@ ast_CURRENT.ml: ast.ml
 ast.ml: ast.ORIG.ml
 	cppo -D CURRENT -D PREFIX -V OCAML:$(ocamlVERSION) $< > $@.NEW && mv $@.NEW $@
 
+migrations.ml: migrations.ML composed_migrations.inc
+	cppo $< > $@.NEW && mv $@.NEW $@
+
+composed_migrations.inc: compose-migrations.pl Makefile
+	./compose-migrations.pl 410 411 412 413 414 500 510 520 530 540 > $@
+
 $(TARGET): $(CMO)
 	$(OCAMLFIND) ocamlc $(DEBUG) $^ -a -o $(TARGET)
 
 $(TARGET:.cma=.cmxa) $(TARGET:.cma=.a): $(CMX) $(CMO:.cmo=.o)
 	$(OCAMLFIND) ocamlopt $(DEBUG) $^ -a -o $(TARGET:.cma=.cmxa)
 
+clean::
+	rm -rf *.inc migrations.ml composed_migrations.inc

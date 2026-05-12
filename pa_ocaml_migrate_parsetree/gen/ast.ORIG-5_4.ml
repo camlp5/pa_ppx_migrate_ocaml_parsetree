@@ -57,6 +57,12 @@ type 'a loc = [%import: 'a
              
 # 35 "ast.ORIG.ml"
                   Asttypes.arg_label] 
+# 38 "ast.ORIG.ml"
+[%%import: 
+# 38 "ast.ORIG.ml"
+             
+# 38 "ast.ORIG.ml"
+                  Asttypes.atomic_flag] 
 # 40 "ast.ORIG.ml"
 [%%import: 
 # 40 "ast.ORIG.ml"

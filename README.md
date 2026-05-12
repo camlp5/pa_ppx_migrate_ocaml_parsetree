@@ -1,8 +1,8 @@
 Migrations from one version of the OCaml AST to another
 
-### Version 0.01
+### Version 5.4.0
 
-This is ``pa_ppx_migrate_ocaml_parsetree`` (alpha) version 0.01.
+This is ``pa_ppx_migrate_ocaml_parsetree`` version 5.4.0.
 
 # Overview
 

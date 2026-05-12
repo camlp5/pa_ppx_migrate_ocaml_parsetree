@@ -34,6 +34,9 @@ type 'a loc = [%import: 'a PREFIX Asttypes.loc]
 #if OCAML_VERSION >= (4, 3, 0)
 [%%import: PREFIX Asttypes.arg_label] 
 #endif
+#if OCAML_VERSION >= (5, 4, 0)
+[%%import: PREFIX Asttypes.atomic_flag] 
+#endif
 [%%import: PREFIX Asttypes.label] 
 [%%import: PREFIX Asttypes.closed_flag] 
 [%%import: PREFIX Asttypes.rec_flag] 

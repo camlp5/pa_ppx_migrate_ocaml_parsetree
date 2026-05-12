@@ -1,3 +1,13 @@
+pa_ppx_migrate_ocaml_parsetree Version 5.4.0
+---------------------------------------------
+
+* [10 May 2026]
+
+  * add migration for OCaml 5.4.0
+
+  * Change version-numbering of pa_ppx_migrate_ocaml_parsetree so it
+    matches that OCaml, since an OCaml update usually forces an update
+    to this package (a migration for the new AST type)
 
 pa_ppx_migrate_ocaml_parsetree Version 0.02
 -------------------------------------------

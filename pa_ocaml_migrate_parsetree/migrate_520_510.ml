@@ -47,9 +47,6 @@ let _migrate_list subrw0 __dt__ __inh__ l =
   List.map (subrw0 __dt__ __inh__) l
 
 [%%import: Reorg_ast.Ast_5_2.attribute]
-(*
-[%%import: Migrate_520_510.attribute]
- *)
 [@@deriving migrate
     { inherit_type = [%typ: location_t option]
     ; dispatch_type = dispatch_table_t

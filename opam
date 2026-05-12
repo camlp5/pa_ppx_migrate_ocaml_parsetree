@@ -1,4 +1,4 @@
-version: "0.02"
+version: "5.4.0"
 synopsis: "Migrations from one version of the OCaml AST to another"
 description:
 """

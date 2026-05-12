@@ -1,4 +1,3 @@
-# 1 "migrations.ML"
 (**pp -syntax camlp5o *)
 
 module type ASTSIG = sig
@@ -127,30 +126,5 @@ module Migrate_410_500 = Compose(Migrate_410_411)(Migrate_411_500)
 module Migrate_500_410 = Compose(Migrate_500_411)(Migrate_411_410)
 
 module Composed = struct
-# 1 "composed_migrations.inc"
-module Migrate_410_412 = Compose(Migrate_410_411)(Migrate_411_412)
-module Migrate_412_410 = Compose(Migrate_412_411)(Migrate_411_410)
-
-module Migrate_410_413 = Compose(Migrate_410_412)(Migrate_412_413)
-module Migrate_413_410 = Compose(Migrate_413_412)(Migrate_412_410)
-
-module Migrate_410_414 = Compose(Migrate_410_413)(Migrate_413_414)
-module Migrate_414_410 = Compose(Migrate_414_413)(Migrate_413_410)
-
-module Migrate_410_500 = Compose(Migrate_410_414)(Migrate_414_500)
-module Migrate_500_410 = Compose(Migrate_500_414)(Migrate_414_410)
-
-module Migrate_410_510 = Compose(Migrate_410_500)(Migrate_500_510)
-module Migrate_510_410 = Compose(Migrate_510_500)(Migrate_500_410)
-
-module Migrate_410_520 = Compose(Migrate_410_510)(Migrate_510_520)
-module Migrate_520_410 = Compose(Migrate_520_510)(Migrate_510_410)
-
-module Migrate_410_530 = Compose(Migrate_410_520)(Migrate_520_530)
-module Migrate_530_410 = Compose(Migrate_530_520)(Migrate_520_410)
-
-module Migrate_410_540 = Compose(Migrate_410_530)(Migrate_530_540)
-module Migrate_540_410 = Compose(Migrate_540_530)(Migrate_530_410)
-
-# 130 "migrations.ML"
+#include "composed_migrations.inc"
 end

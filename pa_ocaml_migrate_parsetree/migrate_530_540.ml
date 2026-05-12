@@ -1,7 +1,7 @@
 (**pp -syntax camlp5o $(IMPORT_OCAMLCFLAGS) *)
 [@@@ocaml.warning "@partial-match"]
 module SRC = Reorg_ast.Ast_5_3
-module DST = Reorg_ast.Ast_5_2
+module DST = Reorg_ast.Ast_5_4
 
 let src_loc_none =
   let open SRC in
@@ -47,9 +47,14 @@ let _migrate_list subrw0 __dt__ __inh__ l =
   List.map (subrw0 __dt__ __inh__) l
 
 module Format_doc = Reorg_ast.Ast_5_3.Format_doc
-[%%import: Reorg_ast.Ast_5_3.attribute]
+[%%typedecls
+  [%%import: Reorg_ast.Ast_5_3.attribute
+    [@with [%typ: longident_t location_loc] := longident_loc]
+  ]
+  type longident_loc = longident_t location_loc
+]
 [@@deriving migrate
-    { inherit_type = [%typ: location_t option]
+    { inherit_type = [%typ: SRC.location_t option]
     ; dispatch_type = dispatch_table_t
     ; dispatch_table_constructor = make_dt
     ; default_dispatchers = [
@@ -60,7 +65,6 @@ module Format_doc = Reorg_ast.Ast_5_3.Format_doc
             lexing_position
           ; location_t
           ; location_loc
-          ; longident_t
           ]
         }
       ; {
@@ -102,12 +106,12 @@ module Format_doc = Reorg_ast.Ast_5_3.Format_doc
         ; class_type_desc
         ; class_type_field
         ; class_type_field_desc
+        ; constant
+        ; constant_desc
         ; constructor_arguments
         ; constructor_declaration
         ; core_type
-        ; core_type_desc
         ; expression
-        ; expression_desc
         ; extension
         ; extension_constructor
         ; extension_constructor_kind
@@ -132,7 +136,6 @@ module Format_doc = Reorg_ast.Ast_5_3.Format_doc
         ; object_field_desc
         ; open_declaration
         ; open_description
-        ; package_type
         ; pattern
         ; payload
         ; row_field
@@ -217,49 +220,135 @@ module Format_doc = Reorg_ast.Ast_5_3.Format_doc
         ; dsttype = [%typ: exn]
         ; code = fun _ _ x -> x
         }
-      ; migrate_constant = {
-          srctype = [%typ: constant]
-        ; dsttype = [%typ: DST.constant]
-        ; code = fun __dt__ __inh__ { pconst_desc ; pconst_loc } ->
-                 match pconst_desc with
-            Pconst_integer (v1, v2) ->
-             DST.Pconst_integer (v1, v2)
-          | Pconst_char v1 ->
-            DST.Pconst_char v1
-          | Pconst_string (v1, v2, v3) ->
-            let v2 = __dt__.migrate_location_t __dt__ __inh__ v2 in
-            DST.Pconst_string (v1, v2, v3)
-          | Pconst_float (v1, v2) ->
-            DST.Pconst_float (v1, v2)
-        }
-      ; migrate_out_type = {
-          srctype = [%typ: out_type]
-        ; dsttype = [%typ: DST.out_type]
-        ; custom_branches_code = function
-    | Otyp_record v_0 ->
-        let open DST in
-        Otyp_record
-          ((fun __dt__ __inh__ ->
-              __dt__.migrate_list
-                (fun __dt__ __inh__ { olab_name ; olab_mut ; olab_type } ->
-                  (olab_name, olab_mut = Mutable, __dt__.migrate_out_type __dt__ __inh__ olab_type)
-                   )
-                __dt__ __inh__)
-             __dt__ __inh__ v_0)
-        }
       ; migrate_out_value = {
           srctype = [%typ: out_value]
         ; dsttype = [%typ: DST.out_value]
         ; custom_branches_code = function
         | Oval_printer v_0 ->
-           migration_error None "cannot migrate (5.3.0 -> 5.2.0) an Oval_printer of type out_value"
+           migration_error None "cannot migrate (5.3.0 -> 5.4.0) an Oval_printer of type out_value"
+        | Oval_array v_0 ->
+           DST.Oval_array
+             (__dt__.migrate_list
+                __dt__.migrate_out_value __dt__ __inh__ v_0,
+              DST.Mutable)
+
+        | Oval_tuple v_0 ->
+           DST.Oval_tuple
+             (__dt__.migrate_list
+                (fun __dt__ __inh__ v_1 ->
+                  (None, __dt__.migrate_out_value __dt__ __inh__ v_1))
+                __dt__ __inh__ v_0)
+        }
+      ; migrate_longident_loc = {
+          srctype = [%typ: longident_loc]
+        ; dsttype = [%typ: DST.longident_t DST.location_loc]
+        ; code = fun __dt__ __inh__ ll ->
+                 __dt__.migrate_location_loc
+                   (fun __dt__ __inh__ -> __dt__.migrate_longident_t __dt__ (Some ll.loc)) __dt__
+                   __inh__ ll
+        }
+      ; migrate_longident_t = {
+          srctype = [%typ: longident_t]
+        ; dsttype = [%typ: DST.longident_t]
+        ; custom_branches_code = function
+    | Ldot (v_0, v_1) ->
+       let loc = match __inh__ with
+           Some loc -> __dt__.migrate_location_t __dt__ __inh__ loc
+         | None -> dst_loc_none in
+       DST.Ldot
+         ({txt=__dt__.migrate_longident_t __dt__ __inh__ v_0; loc=loc},
+          {txt=v_1; loc=loc})
+
+    | Lapply (v_0, v_1) ->
+       let loc = match __inh__ with
+           Some loc -> __dt__.migrate_location_t __dt__ __inh__ loc
+         | None -> dst_loc_none in
+        DST.Lapply
+          ({txt=__dt__.migrate_longident_t __dt__ __inh__ v_0; loc=loc},
+           {txt=__dt__.migrate_longident_t __dt__ __inh__ v_1; loc=loc})
+        }
+      ; migrate_package_type = {
+          srctype = [%typ: package_type]
+        ; dsttype = [%typ: DST.package_type]
+        ; code = fun __dt__ __inh__ (v_0, v_1) ->
+          let path = __dt__.migrate_longident_loc __dt__ __inh__ v_0 in
+          let loc = path.DST.loc in
+          {DST.ppt_path = path
+          ; ppt_cstrs = 
+              __dt__.migrate_list
+                (fun __dt__ __inh__ (v_0, v_1) ->
+                  (__dt__.migrate_longident_loc __dt__ __inh__ v_0,
+                   __dt__.migrate_core_type __dt__ __inh__ v_1))
+                __dt__ __inh__ v_1
+          ; ppt_loc = loc
+          ; ppt_attrs = []
+          }
+        }
+
+      ; migrate_expression_desc = {
+          srctype = [%typ: expression_desc]
+        ; dsttype = [%typ: DST.expression_desc]
+        ; custom_branches_code = function
+        | Pexp_tuple v_0 ->
+           DST.Pexp_tuple
+             (__dt__.migrate_list
+                (fun __dt__ __inh__ e ->
+                  (None, __dt__.migrate_expression __dt__ __inh__ e))
+                __dt__ __inh__ v_0)
+        | Pexp_pack v_0 ->
+           let open DST in
+           Pexp_pack
+             (__dt__.migrate_module_expr __dt__ __inh__ v_0, None)
         }
       ; migrate_pattern_desc = {
           srctype = [%typ: pattern_desc]
         ; dsttype = [%typ: DST.pattern_desc]
         ; custom_branches_code = function
-        | Ppat_effect (v_0, v_1) ->
-           migration_error None "cannot migrate (5.3.0 -> 5.2.0) a Ppat_effect of type pattern_desc"
+        | Ppat_tuple v_0 ->
+           DST.Ppat_tuple
+             (__dt__.migrate_list
+                 (fun __dt__ __inh__ v_1 -> (None, __dt__.migrate_pattern __dt__ __inh__ v_1))
+                 __dt__ __inh__ v_0,
+              DST.Closed)
+        }
+      ; migrate_core_type_desc = {
+          srctype = [%typ: core_type_desc]
+        ; dsttype = [%typ: DST.core_type_desc]
+        ; custom_branches_code = function
+        | Ptyp_tuple v_0 ->
+           DST.Ptyp_tuple
+             (__dt__.migrate_list
+                (fun __dt__ __inh__ ct ->
+                  (None, __dt__.migrate_core_type __dt__ __inh__ ct))
+                __dt__ __inh__ v_0)
+        }
+      ; migrate_out_label = {
+          srctype = [%typ: out_label]
+        ; dsttype = [%typ: DST.out_label]
+        ; custom_fields_code = {
+            olab_atomic = DST.Nonatomic
+          }
+        }
+      ; migrate_out_type = {
+          srctype = [%typ: out_type]
+        ; dsttype = [%typ: DST.out_type]
+        ; custom_branches_code = function
+        | Otyp_tuple v_0 ->
+           DST.Otyp_tuple
+             (__dt__.migrate_list
+                (fun __dt__ __inh__ v_1 -> (None, __dt__.migrate_out_type __dt__ __inh__ v_1))
+                __dt__ __inh__ v_0)
+        | Otyp_module (v_0, v_1) ->
+           let opck = {
+               DST.opack_path = __dt__.migrate_out_ident __dt__ __inh__ v_0
+             ; opack_cstrs = 
+                 __dt__.migrate_list
+                   (fun __dt__ __inh__ (v_0, v_1) ->
+                     v_0,
+                     __dt__.migrate_out_type __dt__ __inh__ v_1)
+                   __dt__ __inh__ v_1
+             } in
+           DST.Otyp_module opck
         }
       }
     }
