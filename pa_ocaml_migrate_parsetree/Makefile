@@ -90,7 +90,7 @@ migrations.ml: migrations.ML composed_migrations.inc
 	cppo $< > $@.NEW && mv $@.NEW $@
 
 composed_migrations.inc: compose-migrations.pl Makefile
-	./compose-migrations.pl 410 411 412 413 414 500 510 520 530 540 > $@
+	./compose-migrations.pl 410 411 412 413 414 500 510 520 530 540 > $@.NEW && mv $@.NEW $@
 
 $(TARGET): $(CMO)
 	$(OCAMLFIND) ocamlc $(DEBUG) $^ -a -o $(TARGET)
@@ -99,4 +99,4 @@ $(TARGET:.cma=.cmxa) $(TARGET:.cma=.a): $(CMX) $(CMO:.cmo=.o)
 	$(OCAMLFIND) ocamlopt $(DEBUG) $^ -a -o $(TARGET:.cma=.cmxa)
 
 clean::
-	rm -rf *.inc migrations.ml composed_migrations.inc
+	rm -rf *.inc migrations.ml composed_migrations.inc *.NEW
