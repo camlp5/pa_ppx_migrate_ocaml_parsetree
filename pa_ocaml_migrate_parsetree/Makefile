@@ -97,5 +97,7 @@ $(TARGET): $(CMO)
 $(TARGET:.cma=.cmxa) $(TARGET:.cma=.a): $(CMX) $(CMO:.cmo=.o)
 	$(OCAMLFIND) ocamlopt $(DEBUG) $^ -a -o $(TARGET:.cma=.cmxa)
 
+.SECONDARY: all_ast.ml
+
 clean::
 	rm -rf *.inc migrations.ml composed_migrations.inc *.NEW all_ast.ml
