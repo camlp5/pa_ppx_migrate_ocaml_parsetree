@@ -1,6 +1,11 @@
 pa_ppx_migrate_ocaml_parsetree Version 5.4.0
 ---------------------------------------------
 
+* [14 May 2026] sync config
+
+pa_ppx_migrate_ocaml_parsetree Version 5.4.0
+---------------------------------------------
+
 * [10 May 2026]
 
   * add migration for OCaml 5.4.0
