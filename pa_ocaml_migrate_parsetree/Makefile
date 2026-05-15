@@ -33,6 +33,7 @@ ML=all_ast.ml reorg_ast.ml \
 	migrate_510_520.ml migrate_520_510.ml \
 	migrate_520_530.ml migrate_530_520.ml \
 	migrate_530_540.ml migrate_540_530.ml \
+	migrate_540_550.ml migrate_550_540.ml \
 	migrations.ml
 
 MLI=\
@@ -57,6 +58,7 @@ MLI=\
 	migrate_510_520.mli migrate_520_510.mli \
 	migrate_520_530.mli migrate_530_520.mli \
 	migrate_530_540.mli migrate_540_530.mli \
+	migrate_540_550.mli migrate_550_540.mli \
 
 
 TOOLSML = mk_meta.ml

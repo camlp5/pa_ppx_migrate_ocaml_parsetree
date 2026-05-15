@@ -11,8 +11,8 @@ for v in \
     ./DOIT 4 $v
     done
 
-./DOIT 5 0
-./DOIT 5 1
-./DOIT 5 2
-./DOIT 5 3
-./DOIT 5 4
+for v in \
+  0 1 2 3 4 ; do
+./DOIT 5 $v
+done
+./DOIT 5 5 ~beta1
